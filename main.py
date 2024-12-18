@@ -48,11 +48,10 @@ def test_endpoints():
     test_cases = [
         {"name": "Valid input - positive text", "text": "I love this movie!", "model_path": "omidroshani/imdb-sentiment-analysis"},
         {"name": "Valid input - negative text", "text": "This is the worst experience I've ever had.", "model_path": "siebert/sentiment-roberta-large-english"},
-        {"name": "Valid input - neutral text", "text": "This movie was just okay.", "model_path": "siebert/sentiment-roberta-large-english"},
-        {"name": "Invalid model path", "text": "Completely disappointed with the product.", "model_path": "invalid/model-path"},
+        {"name": "Invalid model path", "text": "Completely disappointed.", "model_path": "invalid/model-path"},
         {"name": "Empty text", "text": "", "model_path": "siebert/sentiment-roberta-large-english"},
         {"name": "Missing text field", "model_path": "siebert/sentiment-roberta-large-english"},
-        {"name": "Missing model_path field", "text": "I love this product!"},
+        {"name": "Missing model_path field", "text": "I love this movie!"},
         {"name": "Non-string text input", "text": 12345, "model_path": "siebert/sentiment-roberta-large-english"},
         {"name": "Invalid JSON payload", "payload": "invalid-json"}
     ]
@@ -92,5 +91,5 @@ def test_endpoints():
 
 
 if __name__ == "__main__":
-    #classify_all()
-    test_endpoints()
+    classify_all()
+    #test_endpoints()

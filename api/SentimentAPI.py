@@ -80,7 +80,7 @@ class SentimentAPI:
                     return jsonify({"error": f"Model '{model_path}' not found."}), 404
 
                 # Classify the text
-                sentiment = self.review_classifier.models[model_path].classify_text(text)
+                sentiment, score = self.review_classifier.models[model_path].classify_text(text)
 
                 return jsonify({"model_path": model_path, "sentiment": sentiment.lower()}), 200
 

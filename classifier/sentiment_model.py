@@ -8,8 +8,7 @@ class SentimentModel:
     pre-trained models from the Hugging Face Transformers library. 
 
     This class supports advanced features like handling token limits through text chunking 
-    and optional label mapping for customized sentiment outputs. It is designed for ease of use 
-    and scalability in text classification tasks.
+    and label mapping for customized sentiment outputs.
     """
 
     def __init__(self, model_path: str, pipeline_task: str, label_map: Dict[str, str]):
@@ -18,8 +17,8 @@ class SentimentModel:
 
         Parameters:
             model_path (str): The path of the pre-trained model to be used for sentiment analysis.
-            pipeline_task (str): The task type (e.g., 'text-classification') for the Hugging Face pipeline.
-            label_map (Dict[str, str], optional): A dictionary mapping model output labels to desired sentiment labels 
+            pipeline_task (str): The task type for the Hugging Face pipeline.
+            label_map (Dict[str, str]): A dictionary mapping model output labels to desired sentiment labels 
                                                   (e.g., {"LABEL_0": "negative", "LABEL_1": "positive"}).
         """
         self.model_path = model_path
@@ -40,7 +39,7 @@ class SentimentModel:
             text (str): The input text to be classified.
 
         Returns:
-            str: The aggregated sentiment label for the input text.
+            Tuple[string, float]: The aggregated sentiment label for the input text and the confidence score.
         """
         # Split the text into chunks to fit within the tokenizer's token limit
         chunks = self.chunk_text(text)
