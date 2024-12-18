@@ -1,5 +1,4 @@
 from classifier.review_classifier import ReviewClassifier
-import nltk
 import requests
 import json
 
@@ -93,7 +92,5 @@ def test_endpoints():
 
 
 if __name__ == "__main__":
-    # Ensure NLTK's tokenizer is available
-    nltk.download('punkt')
     #classify_all()
     test_endpoints()

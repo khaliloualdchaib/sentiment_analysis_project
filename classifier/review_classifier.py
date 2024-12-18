@@ -67,9 +67,10 @@ class ReviewClassifier:
 
             for model_path, model in self.models.items():
                 # Get sentiment from the model and store it in lowercase
-                sentiment = model.classify_text(review)
-                review_results[model_path] = sentiment.lower()
-
+                sentiment, score = model.classify_text(review)
+                review_results[model_path] = sentiment
+                review_results[f"{model_path} score"] = score
+                
             all_results.append(review_results)
 
         return pd.DataFrame(all_results)

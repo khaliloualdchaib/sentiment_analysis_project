@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from transformers import pipeline, AutoTokenizer
 import nltk
 
@@ -29,7 +29,7 @@ class SentimentModel:
         self.tokenizer = AutoTokenizer.from_pretrained(model_path)
         self.max_length = 512  # Default maximum token length for the tokenizer
 
-    def classify_text(self, text: str) -> str:
+    def classify_text(self, text: str) -> Tuple[str, float]:
         """
         Classifies the sentiment of the input text.
 
@@ -45,13 +45,25 @@ class SentimentModel:
         # Split the text into chunks to fit within the tokenizer's token limit
         chunks = self.chunk_text(text)
         predictions = self.pipeline(chunks, padding=True)
+        positive_scores = []
+        negative_scores = []
 
-        # Map the labels if a label_map is provided
-        sentiments = [self.label_map[pred['label']] for pred in predictions]
+        for pred in predictions:
+            label = self.label_map[pred['label']]
+            if label == "POSITIVE":
+                positive_scores.append(pred['score'])
+            elif label == "NEGATIVE":
+                negative_scores.append(pred['score'])
         
-        # Aggregate the sentiment predictions (majority voting mechanism)
-        overall_sentiment = max(set(sentiments), key=sentiments.count)
-        return overall_sentiment
+        # Compute average scores for each label
+        avg_positive_score = sum(positive_scores) / len(positive_scores) if positive_scores else 0
+        avg_negative_score = sum(negative_scores) / len(negative_scores) if negative_scores else 0
+        
+        # Determine the final sentiment and its average score
+        if avg_positive_score >= avg_negative_score:
+            return "positive", avg_positive_score
+        return "negative", avg_negative_score
+    
 
     def chunk_text(self, text: str) -> List[str]:
         """
