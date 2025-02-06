@@ -82,7 +82,7 @@ class SentimentAPI:
                 # Classify the text
                 sentiment, score = self.review_classifier.models[model_path].classify_text(text)
 
-                return jsonify({"model_path": model_path, "sentiment": sentiment.lower()}), 200
+                return jsonify({"model_path": model_path, "sentiment": sentiment}), 200
 
             except (KeyError, TypeError) as e:
                 return jsonify({"error": "Invalid input. Provide 'text' and 'model_path'.", "details": str(e)}), 400

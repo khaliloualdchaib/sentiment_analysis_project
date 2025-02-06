@@ -91,5 +91,5 @@ def test_endpoints():
 
 
 if __name__ == "__main__":
-    classify_all()
-    #test_endpoints()
+    #classify_all()
+    test_endpoints()
